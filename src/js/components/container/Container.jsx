@@ -1,86 +1,84 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Nav from "../presentational/Nav.jsx";
-import About from "../presentational/About.jsx";
-import { Work } from "../presentational/Work.jsx";
+// import Nav from "../presentational/Nav.jsx";
+import Form from "../presentational/Form.jsx";
+import Weather from "../presentational/Weather.jsx";
+import Svg from "../presentational/Svg.jsx";
+
+const API_KEY = '55f630c614c9ef35570a0ea5e189ade3';
 
 class Container extends Component {
   constructor(props) {
     super(props);
-    this.handleShow = this.handleShow.bind(this);
-    this.handleMode = this.handleMode.bind(this);
     this.state = {
-      isAboutShowing: false,
-      darkMode: false
-    };
-  }
-
-  handleShow() {
-    this.setState(
-      {
-        isAboutShowing: this.state.isAboutShowing == false ? true : false
-      },
-      // () => console.log(this.state)
-    );
-  }
-
-  handleMode() {
-    this.setState(
-      {
-        darkMode: this.state.darkMode == false ? true : false
-      },
-      // () => this.state.darkMode ? document.body.classList ='dark-mode' : ''
-    );
+      temperature: undefined,
+      city: undefined,
+      country: undefined,
+      humidity: undefined,
+      description: undefined,
+      error: undefined,
+      class: ''
+    }
   }
 
   
 
+  getWeather = async (e) => {
+    e.preventDefault();
+    // console.log(e.target);
+    const city = e.target.elements.city.value;
+    const country = e.target.elements.country.value;
+    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
+    const data = await api_call.json();
+    console.log(data);
+    if (city && country){
+      this.setState({
+        temperature: data.main.temp,
+        city: data.name,
+        country: data.sys.country,
+        humidity: data.main.humidity,
+        description: data.weather[0].description,
+        error: undefined,
+        class:'submitted showing '
+      });
+    } else {
+      this.setState({
+        temperature: undefined,
+        city: undefined,
+        country: undefined,
+        humidity: undefined,
+        description: undefined,
+        error: "Please enter a City and Country Code",
+        class: ''
+      });
+    }
+  }
+
+
   render() {
-    
-    const isAboutShowing = this.state.isAboutShowing;
-    const darkMode = this.state.darkMode;
-    darkMode ? document.body.classList = 'dark-mode' : document.body.classList =  '';
 
     return (
-      <div className={darkMode ? 'container dark-mode' : 'container'}>
-        <header>
-          <h1 className="title">
-            <a className={darkMode ? 'dark-mode' : ''} href="/">Dylan Connor</a>
-          </h1>
-          <p onClick={this.handleMode}>{darkMode ? 'Light Mode' : 'Dark Mode'}</p>
-        </header>
-        <Nav onClick={this.handleShow} darkMode={darkMode ? 'dark-mode' : ''} />
-
-        {isAboutShowing ? (
-          <About
-          darkMode={darkMode ? 'dark-mode' : ''}
-          />
-        ) : (
-          <main>
-            <Work
-              title="Avnoe"
-              link="https://kee-app.herokuapp.com/login"
-              img="img/drawing-upload-final.gif"
-              info="A Node.js, JavaScript, and Canvas digital journal web app."
-              darkMode={darkMode ? 'dark-mode' : ''}
-            />
-            <Work
-              title="J.Walls"
-              link="https://dcu4.github.io/DCU4.github.io-J_Walls/"
-              img="img/jwalls-gif.gif"
-              info="An HTML, SASS/SCSS, and JavaScript website for musician J.Walls (that's me!)."
-              darkMode={darkMode ? 'dark-mode' : ''}
-            />
-            <Work
-              title="Esther Rivas"
-              link="https://dcu4.github.io/DCU4.github.io-Esther-Rivas/index.html"
-              img="img/esther.gif"
-              info="An HTML, SASS/SCSS, and JavaScript website for a friend who is a painter."
-              darkMode={darkMode ? 'dark-mode' : ''}
-            />
-          </main>
-        )}
-      </div>
+      
+      <main>
+        <h1>Weather App</h1>
+        <Form 
+          getWeather={this.getWeather}
+          error={this.state.error}
+          class={this.state.class} 
+        />
+        <Svg
+          class={this.state.class} 
+        />
+        <Weather 
+          temperature={this.state.temperature}
+          city={this.state.city}
+          country={this.state.country}
+          humidity={this.state.humidity}
+          description={this.state.description}
+          error={this.state.error}
+          class={this.state.class} 
+        />
+      </main>
     );
   }
 }

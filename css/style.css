@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html {
+  font-family: 'Avenir', sans-serif;
+  font-size: 16px; }
+
+body {
+  animation: color-change-2 10s linear infinite alternate both;
+  background-color: #DCD9D4;
+  color: #444;
+  margin: 2%;
+  display: grid;
+  grid-template-columns: 110px 4fr;
+  grid-template-rows: 100px 4fr;
+  grid-template-areas: "header header" "nav main";
+  justify-content: center;
+  /*For JS*/ }
+  body a {
+    text-decoration: none;
+    color: #444;
+    position: relative;
+    height: 100px;
+    margin: 0 auto;
+    overflow: hidden; }
+    body a::before {
+      margin: 5px auto;
+      width: 0px;
+      color: #262626;
+      overflow: hidden;
+      position: absolute;
+      content: attr(data-text);
+      transition: all 0.4s; }
+    @media (pointer: fine) {
+      body a:after {
+        width: 0px; }
+      body a:hover::before {
+        width: 100%; }
+      body a:hover:after {
+        width: 100%; } }
+  body header {
+    grid-area: header;
+    margin-bottom: 4%; }
+    body header .title {
+      font-size: 3rem;
+      opacity: 0;
+      animation: fade-in-right ease .4s forwards; }
+  body nav {
+    grid-area: nav; }
+    body nav .menu {
+      list-style-type: none; }
+      body nav .menu .menu-item {
+        margin-bottom: 8%;
+        opacity: 0;
+        animation: fade-in-right ease .8s forwards; }
+  body main {
+    opacity: 0;
+    animation: fade-in ease 1.4s forwards;
+    grid-area: main;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    position: relative; }
+    body main .work {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0 80px;
+      flex-direction: column;
+      position: relative; }
+      body main .work section {
+        padding-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 0; }
+        body main .work section.on-top {
+          z-index: 100; }
+        body main .work section p {
+          font-size: 50px;
+          text-transform: uppercase;
+          padding-bottom: 10px; }
+        body main .work section div {
+          opacity: 0;
+          height: 400px;
+          width: 400px;
+          position: absolute;
+          right: 70px;
+          top: 0; }
+          body main .work section div.shown {
+            opacity: 1;
+            transition: all .4s; }
+  body img {
+    width: 100%;
+    height: 100%;
+    margin: auto; }
+  body .about {
+    width: 100%;
+    height: auto;
+    flex-wrap: wrap;
+    width: 80%;
+    opacity: 0;
+    display: none; }
+    body .about h4 {
+      margin-bottom: 4%; }
+    body .about .bio {
+      margin: 40px 0; }
+      body .about .bio a {
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        border-bottom: solid 1px #444; }
+    body .about .contact {
+      display: flex;
+      margin-top: 4%;
+      position: relative; }
+      body .about .contact .contact-link {
+        margin-right: 20px; }
+  body .selected {
+    border-bottom: 1px solid #444; }
+  body .not-shown {
+    opacity: 0;
+    transition: all .4s; }
+
+@media only screen and (max-width: 720px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.5rem; }
+    body a {
+      line-height: 100px; }
+      body a::before {
+        margin: 8px auto; }
+    body nav .menu {
+      display: flex;
+      justify-content: space-evenly; }
+    body main {
+      display: block;
+      align-items: center; }
+      body main .work {
+        padding: 0; }
+        body main .work section {
+          flex-direction: column; }
+          body main .work section p {
+            font-size: 34px;
+            padding-bottom: 0px; }
+          body main .work section .project {
+            opacity: 1;
+            margin: 16px auto 40px;
+            position: unset;
+            height: 300px;
+            width: 300px; }
+      body main .about {
+        margin: 0 30px; }
+        body main .about .bio {
+          text-align: left; }
+          body main .about .bio a {
+            line-height: 0;
+            padding: 0;
+            margin: 0; } }

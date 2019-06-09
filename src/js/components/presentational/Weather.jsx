@@ -6,7 +6,7 @@ export default class Weather extends Component {
   // }
 
   render() {
-    const deg = <span>&#176;F</span>;
+    const deg = <span>&#176;F</span>; //degree symbol
     let temp = this.props.temperature;
     let city = this.props.city;
     let country = this.props.country;

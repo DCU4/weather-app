@@ -16,7 +16,7 @@ export default class Weather extends Component {
     
     
     return (
-      <section className={this.props.class}>
+      <section className={this.props.class+"data"}>
         <p>{city ? city+"," : ""} {country}</p>
         <p>{temp}<span>{temp ? deg : ""}</span></p>
         <p>{humidity ? humidity+"%" : ""}</p>

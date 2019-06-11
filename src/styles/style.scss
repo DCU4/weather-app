@@ -69,6 +69,7 @@ body {
     }
     .weather-svg {
       opacity:0;
+      // position: relative;
       h1 {
         display:block;
       }
@@ -76,9 +77,29 @@ body {
         // opacity: 1;
         animation: fade-in .5s ease-in .5s forwards;
       }
+      .weather-groups {
+        display: flex;
+        justify-content: flex-end;
+        .sun {
+          // opacity:0;
+          // position: absolute;
+          // right: 0;
+          &.showing{
+            animation: fade-in-left 10s ease-in infinite forwards;
+          }
+        }
+        .clouds {
+          // opacity:0;
+          // position: absolute;
+          // right: 0;
+          &.showing{
+            animation: fade-in-left 10.5s ease-in infinite forwards;
+          }
+        }
+      }
     }
 
-    section {
+    .data {
       opacity:0;
       font-size: 6rem;
       &.submitted {
@@ -104,6 +125,23 @@ body {
 
   to {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left{
+  0% {
+    // opacity: 0;
+    transform: translateX(0);
+  }
+
+  50% {
+    // opacity: 1;
+    transform: translateX(25px);
+  }
+
+  100% {
+    // opacity: 0;
     transform: translateX(0);
   }
 }
